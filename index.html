@@ -133,16 +133,17 @@
   /* Title slide map */
   #africa-map-container {
     position: absolute;
-    right: 2em;
-    top: 50%;
+    right: 1em;
+    top: 45%;
     transform: translateY(-50%);
-    width: 340px;
-    height: 420px;
-    opacity: 0.6;
+    width: 320px;
+    height: 520px;
+    opacity: 0.55;
   }
   #africa-map-container svg {
     width: 100%;
     height: 100%;
+    overflow: visible;
   }
 
   @media print {
@@ -378,65 +379,43 @@
 
   /* ── Africa mini-map on title slide ── */
   (function() {
-    var HIGHLIGHT = {"KEN":1, "NGA":1, "UGA":1};
-    var w = 340, h = 420;
+    // ISO 3166-1 numeric codes for African countries only (no Middle East)
+    var AFRICA_IDS = new Set([
+      "012","024","072","084","108","120","132","140","148","174","178",
+      "180","204","226","231","232","242","262","266","270","288","324",
+      "328","332","384","404","426","430","434","450","454","466","478",
+      "480","504","508","516","562","566","624","638","646","678","686",
+      "694","706","710","716","728","729","736","748","768","788","800",
+      "834","854","894","818","732"
+    ]);
+    var HIGHLIGHT_IDS = new Set(["404","566","800"]); // KEN, NGA, UGA
 
+    var w = 320, h = 520;
     var svg = d3.select("#africa-map-container")
       .append("svg")
       .attr("viewBox", "0 0 " + w + " " + h);
 
     var proj = d3.geoMercator()
-      .center([20, 2])
-      .scale(280)
+      .center([22, 0])
+      .scale(310)
       .translate([w / 2, h / 2]);
 
     var path = d3.geoPath().projection(proj);
 
     d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
       .then(function(world) {
-        var countries = topojson.feature(world, world.objects.countries).features;
-
-        var africaBbox = {minLon: -25, maxLon: 55, minLat: -38, maxLat: 40};
-        var african = countries.filter(function(f) {
-          var c = d3.geoCentroid(f);
-          return c[0] >= africaBbox.minLon && c[0] <= africaBbox.maxLon &&
-                 c[1] >= africaBbox.minLat && c[1] <= africaBbox.maxLat;
-        });
-
-        var idToIso = {};
-        countries.forEach(function(f) {
-          var id = f.id || f.properties.name;
-          if (id === "404") idToIso[id] = "KEN";
-          else if (id === "566") idToIso[id] = "NGA";
-          else if (id === "800") idToIso[id] = "UGA";
-        });
+        var all = topojson.feature(world, world.objects.countries).features;
+        var african = all.filter(function(f) { return AFRICA_IDS.has(f.id); });
 
         svg.selectAll("path")
           .data(african)
           .enter().append("path")
           .attr("d", path)
           .attr("fill", function(f) {
-            var iso = idToIso[f.id];
-            return iso && HIGHLIGHT[iso] ? "#7CC89B" : "#E8EAED";
+            return HIGHLIGHT_IDS.has(f.id) ? "#7CC89B" : "#E8EAED";
           })
-          .attr("stroke", "#CCC")
+          .attr("stroke", "#D0D0D0")
           .attr("stroke-width", 0.5);
-
-        svg.selectAll("text")
-          .data(african.filter(function(f) { return !!idToIso[f.id]; }))
-          .enter().append("text")
-          .attr("x", function(f) { return proj(d3.geoCentroid(f))[0]; })
-          .attr("y", function(f) { return proj(d3.geoCentroid(f))[1]; })
-          .attr("text-anchor", "middle")
-          .attr("dy", "0.35em")
-          .attr("font-family", "Inter, sans-serif")
-          .attr("font-size", "10px")
-          .attr("font-weight", "600")
-          .attr("fill", "#1a5c34")
-          .text(function(f) {
-            var m = {"KEN":"Kenya","NGA":"Nigeria","UGA":"Uganda"};
-            return m[idToIso[f.id]] || "";
-          });
       });
   })();
 </script>
