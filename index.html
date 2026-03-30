@@ -80,6 +80,24 @@
     max-height: 58vh;
   }
 
+  .reveal iframe.chart {
+    width: 100%;
+    height: 52vh;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    display: block;
+    margin: 0.3em auto 0;
+  }
+
+  .reveal iframe.chart-large {
+    height: 58vh;
+  }
+
+  .reveal iframe.chart-tall {
+    height: 65vh;
+  }
+
   .reveal .two-col {
     display: flex;
     gap: 2em;
@@ -194,7 +212,7 @@
 <section>
   <h2>AFS Share of Job Postings</h2>
   <p class="subtitle">Monthly AFS ratio, 3-month rolling average</p>
-  <img src="results/afs_ratio_monthly_db.png" class="chart chart-large">
+  <iframe src="results/charts/chart_afs_ratio_monthly.html" class="chart chart-large"></iframe>
   <div class="takeaway">
     AFS jobs represent <strong>3–6%</strong> of all online postings. Kenya and Nigeria show an <span class="up">upward trend</span> over 2021–2023.
   </div>
@@ -204,7 +222,7 @@
 <section>
   <h2>On-Farm vs Off-Farm: Annual Shares</h2>
   <p class="subtitle">Yearly AFS ratio decomposed by farm type</p>
-  <img src="results/afs_onfarm_offfarm_bar.png" class="chart chart-large">
+  <iframe src="results/charts/chart_onfarm_offfarm_bar.html" class="chart chart-large"></iframe>
   <div class="takeaway">
     On-farm consistently dominates in <strong>Kenya</strong> and <strong>Uganda</strong>; <strong>Nigeria</strong> has a stronger off-farm component (processing, services).
   </div>
@@ -214,7 +232,7 @@
 <section>
   <h2>On-Farm vs Off-Farm: Monthly Trends</h2>
   <p class="subtitle">3-month rolling average</p>
-  <img src="results/afs_onfarm_offfarm.png" class="chart chart-large">
+  <iframe src="results/charts/chart_onfarm_offfarm_monthly.html" class="chart chart-large"></iframe>
   <div class="takeaway">
     Both segments grow over time; on-farm and off-farm share trajectories diverge across countries.
   </div>
@@ -224,7 +242,7 @@
 <section>
   <h2>Growth Index: On-Farm vs Off-Farm</h2>
   <p class="subtitle">2021 = 100, yearly</p>
-  <img src="results/afs_indexed_yearly.png" class="chart">
+  <iframe src="results/charts/chart_indexed_yearly.html" class="chart"></iframe>
   <div class="takeaway">
     Kenya shows the strongest growth: on-farm postings <span class="up">5× higher</span> in 2023 vs 2021. Off-farm in Kenya grew <span class="up">6×</span>.
     Nigeria off-farm grew <span class="up">2.2×</span> while on-farm declined. Uganda on-farm stable but off-farm volatile.
@@ -235,7 +253,7 @@
 <section>
   <h2>Skills Profile: On-Farm vs Off-Farm</h2>
   <p class="subtitle">ESCO Level 1 skill categories &middot; share of jobs containing each &middot; z-test</p>
-  <img src="results/skills_onfarm_offfarm.png" class="chart chart-large">
+  <iframe src="results/charts/chart_skills_s1.html" class="chart chart-tall"></iframe>
   <div class="takeaway">
     On-farm jobs demand more <span class="up">IT skills</span> (50% vs 26%) and <span class="up">information skills</span>. Off-farm emphasises <span class="down">assisting/caring</span> (77% vs 59%) and <span class="down">handling/moving</span>.
   </div>
@@ -245,7 +263,7 @@
 <section>
   <h2>Skills Detail: 2-Digit Level</h2>
   <p class="subtitle">Top 25 sub-categories by absolute difference</p>
-  <img src="results/skills_l2_onfarm_offfarm.png" class="chart chart-large">
+  <iframe src="results/charts/chart_skills_s2.html" class="chart chart-tall"></iframe>
   <div class="takeaway">
     Off-farm driven by <span class="down">food preparation</span> (53% vs 3%) and <span class="down">cleaning</span> (33% vs 6%). On-farm by <span class="up">tending plants/crops</span> (22% vs 1%), <span class="up">data analysis</span> and <span class="up">research</span>.
   </div>
@@ -255,7 +273,7 @@
 <section>
   <h2>Knowledge Domains: On-Farm vs Off-Farm</h2>
   <p class="subtitle">ESCO 3-digit knowledge categories &middot; z-test for proportions</p>
-  <img src="results/knowledge_onfarm_offfarm.png" class="chart chart-large">
+  <iframe src="results/charts/chart_knowledge.html" class="chart chart-tall"></iframe>
   <div class="takeaway">
     On-farm: <span class="up">agriculture</span> (50% vs 4%), <span class="up">environment</span>, <span class="up">biological sciences</span>. Off-farm: <span class="down">manufacturing</span> (43% vs 15%), <span class="down">personal services</span> (29% vs 3%), <span class="down">hygiene</span>.
   </div>
@@ -265,7 +283,7 @@
 <section>
   <h2>Logistic Regression</h2>
   <p class="subtitle">P(on-farm) ~ skill categories + country FE &middot; N = 33,000</p>
-  <img src="results/logit_skills_onfarm.png" class="chart chart-large">
+  <iframe src="results/charts/chart_logit.html" class="chart chart-tall"></iframe>
 </section>
 
 <section>
