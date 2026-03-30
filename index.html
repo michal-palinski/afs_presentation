@@ -380,8 +380,8 @@
   <h2 style="margin:0 0 0.05em;">Online Job Market Activity</h2>
   <p class="subtitle" style="margin:0 0 0.1em; font-size:0.68em;">Job postings per 100k labour force and real GDP growth &middot; 2021–2023</p>
   <div style="display:flex; gap:0.4em; margin-top:0.05em;">
-    <iframe src="results/charts/chart_postings_per_100k.html" style="flex:1; height:340px; border:none; border-radius:4px;"></iframe>
-    <iframe src="results/charts/chart_gdp_annual.html" style="flex:1; height:340px; border:none; border-radius:4px;"></iframe>
+    <iframe data-src="results/charts/chart_postings_per_100k.html" style="flex:1; height:340px; border:none; border-radius:4px;"></iframe>
+    <iframe data-src="results/charts/chart_gdp_annual.html" style="flex:1; height:340px; border:none; border-radius:4px;"></iframe>
   </div>
   <div style="display:flex; gap:0.4em; margin:-0.25em 0 0;">
     <span style="flex:1; font-size:0.38em; color:#aaa;">Source: Lightcast, MyJobMag, Jobline, Great Uganda Jobs | World Bank / ILO</span>
@@ -429,14 +429,14 @@
       </div>
     </div>
   </div>
-  <iframe src="results/charts/chart_onfarm_offfarm_bar_compact.html" style="width:100%; height:340px; border:none; border-radius:4px; margin-top:0.1em;"></iframe>
+  <iframe data-src="results/charts/chart_onfarm_offfarm_bar_compact.html" style="width:100%; height:340px; border:none; border-radius:4px; margin-top:0.1em;"></iframe>
 </section>
 
 <!-- ═══════════════════════ ON/OFF MONTHLY ═══════════════════════ -->
 <section>
   <h2>On-Farm vs Off-Farm: Monthly Trends</h2>
   <p class="subtitle">3-month rolling average</p>
-  <iframe src="results/charts/chart_onfarm_offfarm_monthly.html" class="chart"></iframe>
+  <iframe data-src="results/charts/chart_onfarm_offfarm_monthly.html" class="chart"></iframe>
   <p style="font-size:0.5em; color:#666; margin:0.4em 0 0; line-height:1.45; border-left: 3px solid #ccc; padding-left: 0.7em;">
     <strong>Note:</strong> OLS regressions of monthly posting counts on month dummies (log-level, January as reference) yield no jointly significant seasonal pattern in any country–sector combination (F-tests, p &gt; 0.10 in all cases). This suggests that online AFS vacancy data do not exhibit systematic within-year cyclicality consistent with agricultural production calendars, and predominantly reflect formal-sector hiring unrelated to seasonal agricultural activity.
   </p>
@@ -582,7 +582,7 @@
 <section>
   <h2>Skills Profile: On-Farm vs Off-Farm</h2>
   <p class="subtitle">ESCO Level 1 skill categories</p>
-  <iframe src="results/charts/chart_skills_s1.html" class="chart"></iframe>
+  <iframe data-src="results/charts/chart_skills_s1.html" class="chart"></iframe>
   <div style="background:#f8f9fa; border-left:3px solid #3AADCF; border-radius:4px; padding:0.3em 0.65em; margin:0.15em 0 0; font-size:0.48em; color:#444; line-height:1.5;">
     On-farm jobs demand significantly more <strong style="color:#2D8E57;">IT skills</strong> (50% vs 26%) and <strong style="color:#2D8E57;">information skills</strong>, while off-farm roles emphasise <strong style="color:#E07A3A;">assisting and caring</strong> (77% vs 59%) and <strong style="color:#E07A3A;">handling and moving</strong>. The relatively high IT intensity in on-farm postings likely reflects selection effects in online vacancy data: digitally advertised on-farm positions tend to be more formalized and skill-intensive roles — such as irrigation engineering, precision agriculture, and farm management — rather than traditional low-skill agricultural work.
   </div>
@@ -592,21 +592,21 @@
 <section>
   <h2>Skills Detail: 2-Digit Level</h2>
   <p class="subtitle">One representative sub-category per 1-digit skill group</p>
-  <iframe src="results/charts/chart_skills_s2.html" class="chart" style="height:560px;"></iframe>
+  <iframe data-src="results/charts/chart_skills_s2.html" class="chart" style="height:560px;"></iframe>
 </section>
 
 <!-- ═══════════════════════ KNOWLEDGE ═══════════════════════ -->
 <section>
   <h2>Knowledge Domains: On-Farm vs Off-Farm</h2>
   <p class="subtitle">ESCO 3-digit knowledge categories</p>
-  <iframe src="results/charts/chart_knowledge.html" class="chart" style="height:580px;"></iframe>
+  <iframe data-src="results/charts/chart_knowledge.html" class="chart" style="height:580px;"></iframe>
 </section>
 
 <!-- ═══════════════════════ LOGIT ═══════════════════════ -->
 <section>
   <h2>Skill Profiles of On-Farm vs Off-Farm Jobs: Logistic regression</h2>
   <p class="subtitle">P(on-farm) ~ skill categories + country FE &middot; N = 33,000</p>
-  <iframe src="results/charts/chart_logit.html" class="chart"></iframe>
+  <iframe data-src="results/charts/chart_logit.html" class="chart"></iframe>
 </section>
 
 <section>
@@ -790,6 +790,8 @@
     transition: 'slide',
     transitionSpeed: 'default',
     center: false,
+    preloadIframes: false,
+    viewDistance: 3,
     pdfMaxPagesPerSlide: 1,
     pdfSeparateFragments: false,
     plugins: []
@@ -815,9 +817,32 @@
     delays.forEach(function(t) { setTimeout(function() { _pingIframe(iframe); }, t); });
   }
 
+  function ensureIframeLoaded(iframe) {
+    if (!iframe || !iframe.dataset || !iframe.dataset.src || iframe.dataset.chartLoaded === "1") return;
+    iframe.dataset.chartLoaded = "1";
+    iframe.src = iframe.dataset.src;
+  }
+
+  function primeSlideCharts(slide) {
+    if (!slide) return;
+    slide.querySelectorAll("iframe[data-src]").forEach(function(iframe) {
+      ensureIframeLoaded(iframe);
+    });
+  }
+
+  function primeNearbySlideCharts() {
+    var idx = Reveal.getIndices();
+    [
+      Reveal.getSlide(idx.h, idx.v),
+      Reveal.getSlide(idx.h + 1, idx.v),
+      Reveal.getSlide(idx.h - 1, idx.v)
+    ].forEach(primeSlideCharts);
+  }
+
   function refreshActiveSlideCharts() {
     var current = Reveal.getCurrentSlide();
     if (!current) return;
+    primeSlideCharts(current);
     current.querySelectorAll("iframe").forEach(function(iframe) {
       _pingIframe(iframe);
       _pingIframeDelayed(iframe, [80, 200, 500, 1000]);
@@ -837,13 +862,14 @@
 
   Reveal.on("ready", function() {
     attachIframeLoadHooks();
-    _pingIframeDelayed(null, []); // noop placeholder
+    primeNearbySlideCharts();
     [60, 300, 800].forEach(function(t) {
       setTimeout(refreshActiveSlideCharts, t);
     });
   });
   Reveal.on("slidechanged", function() {
     attachIframeLoadHooks();
+    primeNearbySlideCharts();
     [0, 80, 280, 600].forEach(function(t) {
       setTimeout(refreshActiveSlideCharts, t);
     });
