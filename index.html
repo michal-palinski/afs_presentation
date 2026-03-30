@@ -171,7 +171,7 @@
   <div class="title-slide">
     <div class="title-text">
       <p style="font-size:0.6em; color:var(--wb-gray); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5em;">Analytical Note</p>
-      <h1>Skills Demand in<br>Agri-Food System Jobs</h1>
+      <h1>Skill Demand in<br>Agri-Food System Jobs</h1>
       <hr class="divider" style="margin:0.8em 0 1em;">
       <p class="subtitle" style="font-size:1.05em;">Evidence from Selected African Countries</p>
       <p style="font-size:0.78em; color:var(--wb-gray); margin-top:2em;">
@@ -187,7 +187,7 @@
   <h2>Outline</h2>
   <hr class="divider">
   <ol style="font-size:0.9em;">
-    <li>Data &amp; methodology</li>
+    <li>Data sources and construction</li>
     <li>AFS job posting trends (2021–2023)</li>
     <li>On-farm vs off-farm: volume dynamics</li>
     <li>Skills profile: on-farm vs off-farm</li>
@@ -197,32 +197,35 @@
   </ol>
 </section>
 
-<!-- ═══════════════════════ DATA ═══════════════════════ -->
+<!-- ═══════════════════════ DATA SOURCES ═══════════════════════ -->
 <section>
-  <h2>Data &amp; Methodology</h2>
+  <h2>Data Sources and Construction</h2>
   <hr class="divider">
-  <div class="two-col">
+  <p style="font-size:0.82em; color:#374151; margin-bottom:0.6em;">
+    Job vacancy data (2021–2023) covering the full economy across selected African countries.
+    Each posting includes: job title, full text description, location, posting date, and employer information.
+  </p>
+  <div class="two-col" style="gap:2.5em;">
     <div class="col">
-      <h3>Job Postings</h3>
-      <ul style="font-size:0.82em;">
-        <li><span class="highlight">994,837</span> online job postings</li>
-        <li>Kenya, Nigeria, Uganda (2021–2023)</li>
-        <li>Sources: Lightcast + scraped portals</li>
-        <li>AFS classification via LLM (Gemma 3 27B)</li>
+      <h3>Primary Source</h3>
+      <ul style="font-size:0.8em;">
+        <li><span class="highlight">Lightcast</span> — aggregates job postings from multiple online platforms into a unified database</li>
+        <li>Complementary data via web scraping from major local portals:
+          <ul style="margin-top:0.3em;">
+            <li><strong>Kenya &amp; Nigeria:</strong> MyJobMag</li>
+            <li><strong>Uganda:</strong> Jobline, Great Uganda Jobs</li>
+          </ul>
+        </li>
       </ul>
     </div>
     <div class="col">
-      <h3>Skills Extraction</h3>
-      <ul style="font-size:0.82em;">
-        <li>Skills extracted via LLM inference</li>
-        <li>Mapped to <span class="highlight">ESCO taxonomy</span> (13,939 concepts)</li>
-        <li>872k jobs × ~50 skills each</li>
-        <li>Binarised at job level for analysis</li>
+      <h3>Data Construction</h3>
+      <ul style="font-size:0.8em;">
+        <li>Dataset initially covers <strong>all occupations</strong>; AFS jobs identified using NLP methods</li>
+        <li>Postings deduplicated using <span class="highlight">semantic similarity</span> of job descriptions</li>
+        <li>Required because Lightcast does not provide unique URLs for cross-source matching</li>
       </ul>
     </div>
-  </div>
-  <div class="takeaway" style="margin-top:1em;">
-    <strong>AFS definition:</strong> Agri-Food System — includes on-farm (crop, livestock, fisheries, forestry) and off-farm (inputs, processing, trading, services) activities.
   </div>
 </section>
 
