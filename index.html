@@ -60,11 +60,19 @@
 
   .reveal .title-slide {
     text-align: left;
-    padding-left: 2em;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .reveal .title-slide .title-text {
+    flex: 1 1 55%;
+    padding-left: 0.5em;
   }
   .reveal .title-slide h1 {
-    font-size: 2.2em;
+    font-size: 2.4em;
     margin-bottom: 0.15em;
+    line-height: 1.1;
   }
 
   .reveal img.chart {
@@ -132,17 +140,16 @@
 
   /* Title slide map */
   #africa-map-container {
-    position: absolute;
-    right: 1em;
-    top: 45%;
-    transform: translateY(-50%);
-    width: 320px;
-    height: 520px;
-    opacity: 0.55;
+    flex: 0 0 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    opacity: 0.5;
   }
   #africa-map-container svg {
     width: 100%;
-    height: 100%;
+    max-height: 95%;
     overflow: visible;
   }
 
@@ -161,16 +168,16 @@
 
 <!-- ═══════════════════════ TITLE ═══════════════════════ -->
 <section>
-  <div class="title-slide" style="position:relative;">
-    <p style="font-size:0.65em; color:var(--wb-gray); font-weight:600; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.3em;">Working Paper</p>
-    <h1>Skills Demand in<br>Agri-Food System Jobs</h1>
-    <hr class="divider">
-    <p class="subtitle" style="font-size:1.0em;">Evidence from Selected African Countries</p>
-    <p style="font-size:0.72em; color:var(--wb-gray); margin-top:1.5em;">
-      Kenya &middot; Nigeria &middot; Uganda<br>
-      2021 – 2023
-    </p>
-    <p class="source" style="margin-top:2em;">Data: Lightcast, Myjobmag, Jobline, Great Uganda Jobs &middot; ESCO taxonomy</p>
+  <div class="title-slide">
+    <div class="title-text">
+      <p style="font-size:0.6em; color:var(--wb-gray); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.5em;">Analytical Note</p>
+      <h1>Skills Demand in<br>Agri-Food System Jobs</h1>
+      <hr class="divider" style="margin:0.8em 0 1em;">
+      <p class="subtitle" style="font-size:1.05em;">Evidence from Selected African Countries</p>
+      <p style="font-size:0.78em; color:var(--wb-gray); margin-top:2em;">
+        Kenya &middot; Nigeria &middot; Uganda
+      </p>
+    </div>
     <div id="africa-map-container"></div>
   </div>
 </section>
@@ -390,14 +397,15 @@
     ]);
     var HIGHLIGHT_IDS = new Set(["404","566","800"]); // KEN, NGA, UGA
 
-    var w = 320, h = 520;
+    var w = 380, h = 580;
     var svg = d3.select("#africa-map-container")
       .append("svg")
-      .attr("viewBox", "0 0 " + w + " " + h);
+      .attr("viewBox", "0 0 " + w + " " + h)
+      .attr("preserveAspectRatio", "xMidYMid meet");
 
     var proj = d3.geoMercator()
-      .center([22, 0])
-      .scale(310)
+      .center([20, 1])
+      .scale(350)
       .translate([w / 2, h / 2]);
 
     var path = d3.geoPath().projection(proj);
