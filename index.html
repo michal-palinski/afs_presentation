@@ -160,7 +160,7 @@
   }
 
   .reveal img.chart {
-    max-height: 52vh;
+    max-height: 360px;
     width: auto;
     display: block;
     margin: 0.3em auto 0;
@@ -169,12 +169,12 @@
   }
 
   .reveal img.chart-large {
-    max-height: 58vh;
+    max-height: 420px;
   }
 
   .reveal iframe.chart {
     width: 100%;
-    height: 55vh;
+    height: 470px;
     border: none;
     border-radius: 4px;
     display: block;
@@ -380,8 +380,8 @@
   <h2 style="margin:0 0 0.05em;">Online Job Market Activity</h2>
   <p class="subtitle" style="margin:0 0 0.1em; font-size:0.68em;">Job postings per 100k labour force and real GDP growth &middot; 2021–2023</p>
   <div style="display:flex; gap:0.4em; margin-top:0.05em;">
-    <iframe src="results/charts/chart_postings_per_100k.html" style="flex:1; height:38vh; border:none; border-radius:4px;"></iframe>
-    <iframe src="results/charts/chart_gdp_annual.html" style="flex:1; height:38vh; border:none; border-radius:4px;"></iframe>
+    <iframe src="results/charts/chart_postings_per_100k.html" style="flex:1; height:340px; border:none; border-radius:4px;"></iframe>
+    <iframe src="results/charts/chart_gdp_annual.html" style="flex:1; height:340px; border:none; border-radius:4px;"></iframe>
   </div>
   <div style="display:flex; gap:0.4em; margin:-0.25em 0 0;">
     <span style="flex:1; font-size:0.38em; color:#aaa;">Source: Lightcast, MyJobMag, Jobline, Great Uganda Jobs | World Bank / ILO</span>
@@ -429,7 +429,7 @@
       </div>
     </div>
   </div>
-  <iframe src="results/charts/chart_onfarm_offfarm_bar_compact.html" style="width:100%; height:38vh; border:none; border-radius:4px; margin-top:0.1em;"></iframe>
+  <iframe src="results/charts/chart_onfarm_offfarm_bar_compact.html" style="width:100%; height:340px; border:none; border-radius:4px; margin-top:0.1em;"></iframe>
 </section>
 
 <!-- ═══════════════════════ ON/OFF MONTHLY ═══════════════════════ -->
@@ -592,14 +592,14 @@
 <section>
   <h2>Skills Detail: 2-Digit Level</h2>
   <p class="subtitle">One representative sub-category per 1-digit skill group</p>
-  <iframe src="results/charts/chart_skills_s2.html" class="chart"></iframe>
+  <iframe src="results/charts/chart_skills_s2.html" class="chart" style="height:560px;"></iframe>
 </section>
 
 <!-- ═══════════════════════ KNOWLEDGE ═══════════════════════ -->
 <section>
   <h2>Knowledge Domains: On-Farm vs Off-Farm</h2>
-  <p class="subtitle">ESCO 3-digit knowledge categories &middot; z-test for proportions</p>
-  <iframe src="results/charts/chart_knowledge.html" class="chart"></iframe>
+  <p class="subtitle">ESCO 3-digit knowledge categories</p>
+  <iframe src="results/charts/chart_knowledge.html" class="chart" style="height:580px;"></iframe>
 </section>
 
 <!-- ═══════════════════════ LOGIT ═══════════════════════ -->
@@ -793,6 +793,67 @@
     pdfMaxPagesPerSlide: 1,
     pdfSeparateFragments: false,
     plugins: []
+  });
+
+  /* ── Plotly chart resize helpers ──────────────────────────────────────── */
+  function _pingIframe(iframe) {
+    /* 1. postMessage — handled inside each chart's _SELF_RESIZE block */
+    try { iframe.contentWindow.postMessage({type: 'plotly-resize'}, '*'); } catch(e){}
+    /* 2. direct Plotly.Plots.resize — works when same-origin & already loaded */
+    try {
+      var cw = iframe.contentWindow;
+      if (cw && cw.Plotly) {
+        cw.document.querySelectorAll('.js-plotly-plot').forEach(function(el) {
+          try { cw.Plotly.Plots.resize(el); } catch(e){}
+          try { cw.Plotly.relayout(el, {}); } catch(e){}
+        });
+      }
+    } catch(e){}
+  }
+
+  function _pingIframeDelayed(iframe, delays) {
+    delays.forEach(function(t) { setTimeout(function() { _pingIframe(iframe); }, t); });
+  }
+
+  function refreshActiveSlideCharts() {
+    var current = Reveal.getCurrentSlide();
+    if (!current) return;
+    current.querySelectorAll("iframe").forEach(function(iframe) {
+      _pingIframe(iframe);
+      _pingIframeDelayed(iframe, [80, 200, 500, 1000]);
+    });
+  }
+
+  /* attach load-event hook once per iframe so it self-pings on first load */
+  function attachIframeLoadHooks() {
+    document.querySelectorAll("iframe").forEach(function(iframe) {
+      if (iframe.dataset.plotlyHooked) return;
+      iframe.dataset.plotlyHooked = "1";
+      iframe.addEventListener("load", function() {
+        _pingIframeDelayed(iframe, [0, 80, 200, 500, 1000]);
+      });
+    });
+  }
+
+  Reveal.on("ready", function() {
+    attachIframeLoadHooks();
+    _pingIframeDelayed(null, []); // noop placeholder
+    [60, 300, 800].forEach(function(t) {
+      setTimeout(refreshActiveSlideCharts, t);
+    });
+  });
+  Reveal.on("slidechanged", function() {
+    attachIframeLoadHooks();
+    [0, 80, 280, 600].forEach(function(t) {
+      setTimeout(refreshActiveSlideCharts, t);
+    });
+  });
+  Reveal.on("slidetransitionend", function() {
+    refreshActiveSlideCharts();
+    setTimeout(refreshActiveSlideCharts, 150);
+  });
+  window.addEventListener("resize", function() {
+    setTimeout(refreshActiveSlideCharts, 80);
   });
 
   /* ── Africa mini-map on title slide ── */
