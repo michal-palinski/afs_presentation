@@ -430,13 +430,22 @@
     </div>
   </div>
   <iframe data-src="results/charts/chart_onfarm_offfarm_bar_compact.html" style="width:100%; height:340px; border:none; border-radius:4px; margin-top:0.1em;"></iframe>
+  <p style="font-size:0.49em; color:#555; margin:0.34em 0 0; line-height:1.5; border-left:3px solid #3AADCF; padding-left:0.7em;">
+    The on-farm/off-farm balance in online job postings differs markedly from employment structure across all three countries: the on/off-farm ratio in employment is 2.76 in Kenya, 1.98 in Nigeria, and 6.97 in Uganda, compared with 1.33, 0.50, and 3.67, respectively, in observed online job demand (2021). This likely reflects the fact that off-farm activities often have higher turnover and more frequent hiring cycles-for example in restaurants and other service activities-than the more selective, higher-skill on-farm roles captured in online vacancy data, while on-farm hiring is also less likely to be advertised online.
+  </p>
 </section>
 
 <!-- ═══════════════════════ ON/OFF MONTHLY ═══════════════════════ -->
 <section>
   <h2>On-Farm vs Off-Farm: Monthly Trends</h2>
   <p class="subtitle">3-month rolling average</p>
-  <iframe data-src="results/charts/chart_onfarm_offfarm_monthly.html" class="chart"></iframe>
+  <iframe data-src="results/charts/chart_onfarm_offfarm_monthly.html" class="chart" style="height:430px;"></iframe>
+  <p style="font-size:0.58em; color:#555; margin:0.45em 0 0.28em; line-height:1.5; border-left:3px solid #00A876; padding-left:0.7em;">
+    Nigeria is the only country where off-farm postings consistently dominate, and the gap widened sharply in late 2023.<br>
+    Uganda shows the opposite pattern - on-farm postings lead throughout the entire period, with off-farm remaining structurally low.<br>
+    Kenya is the most balanced of the three, with both categories tracking closely and converging by end-2023.<br>
+    Volatility is highest in Nigeria (off-farm) and Uganda (on-farm), while Kenya shows the smoothest trends overall.
+  </p>
   <p style="font-size:0.5em; color:#666; margin:0.4em 0 0; line-height:1.45; border-left: 3px solid #ccc; padding-left: 0.7em;">
     <strong>Note:</strong> OLS regressions of monthly posting counts on month dummies (log-level, January as reference) yield no jointly significant seasonal pattern in any country–sector combination (F-tests, p &gt; 0.10 in all cases). This suggests that online AFS vacancy data do not exhibit systematic within-year cyclicality consistent with agricultural production calendars, and predominantly reflect formal-sector hiring unrelated to seasonal agricultural activity.
   </p>
@@ -521,8 +530,8 @@
           <div style="font-size:0.44em; color:#aaa; margin-top:0.15em;">IQR: 4 – 12</div>
         </div>
       </div>
-      <p style="font-size:0.52em; color:#777; margin:0; line-height:1.4;">
-        The higher count reflects that embedding-based matching captures <strong style="color:#555;">implicit skills</strong> inferred from context — requirements that are not stated verbatim but implied by the described duties.
+      <p style="font-size:0.56em; color:#4a4a4a; margin:0; line-height:1.5; background:#f8f9fa; border-left:3px solid #3AADCF; border-radius:4px; padding:0.42em 0.62em;">
+        The higher count reflects that embedding-based matching captures <strong style="color:#2c3e50;">implicit skills</strong> inferred from context — requirements that are not stated verbatim but implied by the described duties.
       </p>
     </div>
     <div class="col" style="flex:1.1;">
@@ -584,94 +593,56 @@
   <p class="subtitle">ESCO Level 1 skill categories</p>
   <iframe data-src="results/charts/chart_skills_s1.html" class="chart"></iframe>
   <div style="background:#f8f9fa; border-left:3px solid #3AADCF; border-radius:4px; padding:0.3em 0.65em; margin:0.15em 0 0; font-size:0.48em; color:#444; line-height:1.5;">
-    On-farm jobs demand significantly more <strong style="color:#2D8E57;">IT skills</strong> (50% vs 26%) and <strong style="color:#2D8E57;">information skills</strong>, while off-farm roles emphasise <strong style="color:#E07A3A;">assisting and caring</strong> (77% vs 59%) and <strong style="color:#E07A3A;">handling and moving</strong>. The relatively high IT intensity in on-farm postings likely reflects selection effects in online vacancy data: digitally advertised on-farm positions tend to be more formalized and skill-intensive roles — such as irrigation engineering, precision agriculture, and farm management — rather than traditional low-skill agricultural work.
+    Cross-country differences are generally limited, pointing to a broadly similar structure of skill demand in the analyzed countries.
+    The main variation observed is that in Nigeria, on-farm jobs show relatively higher demand for skills related to working with machinery and specialised equipment, while in off-farm jobs working with computer skills are less frequently required compared to Kenya and Uganda.
+    Across countries, on-farm jobs demand significantly more <strong style="color:#2D8E57;">IT skills</strong> (50% vs 26%) and <strong style="color:#2D8E57;">information skills</strong>, while off-farm roles emphasise <strong style="color:#E07A3A;">assisting and caring</strong> (77% vs 59%) and <strong style="color:#E07A3A;">handling and moving</strong>.
+    The relatively high IT intensity in on-farm postings likely reflects selection effects in online vacancy data: digitally advertised on-farm roles tend to be more formalized and skill-intensive - such as irrigation engineering, precision agriculture, and farm management - rather than traditional low-skill agricultural work.
   </div>
 </section>
 
 <!-- ═══════════════════════ SKILLS S2 ═══════════════════════ -->
 <section>
   <h2>Skills Detail: 2-Digit Level</h2>
-  <p class="subtitle">One representative sub-category per 1-digit skill group</p>
-  <iframe data-src="results/charts/chart_skills_s2.html" class="chart" style="height:560px;"></iframe>
+  <p class="subtitle">Top 1 sub-category within each 1-digit skill group, side by side: on-farm vs off-farm</p>
+  <iframe data-src="results/charts/chart_skills_s2.html?v=2" class="chart" style="height:500px;"></iframe>
+  <p style="font-size:0.52em; color:#555; margin:0.35em 0 0; line-height:1.5; border-left:3px solid #3AADCF; padding-left:0.7em;">
+    On-farm skill profiles are highly consistent across countries — the same sub-categories dominate in all three markets, reflecting a common occupational structure of formalized on-farm roles.
+    Off-farm profiles show more cross-country variation, particularly in communication skills (teaching in Kenya, sales in Nigeria, teamwork in Uganda) and in the caring and service domain (food preparation is prominent in Nigeria, while compliance-related skills (guidelines enforcement) lead in Kenya and Uganda).
+  </p>
 </section>
 
 <!-- ═══════════════════════ KNOWLEDGE ═══════════════════════ -->
 <section>
   <h2>Knowledge Domains: On-Farm vs Off-Farm</h2>
   <p class="subtitle">ESCO 3-digit knowledge categories</p>
-  <iframe data-src="results/charts/chart_knowledge.html" class="chart" style="height:580px;"></iframe>
+  <iframe data-src="results/charts/chart_knowledge.html" class="chart" style="height:480px;"></iframe>
+  <p style="font-size:0.48em; color:#444; line-height:1.65; margin:0.4em 1.2em 0; background:#f0f4f8; border-left:3px solid #3AADCF; padding:0.5em 0.8em; border-radius:4px;">
+    The knowledge profile of AFS job demand is broadly consistent across the three countries: agriculture dominates on-farm postings, while manufacturing &amp; processing and personal services are the leading off-farm domains. Business &amp; administration knowledge is prevalent in both segments. Cross-country variation is limited, though Uganda shows somewhat higher demand for architecture &amp; construction knowledge in on-farm roles, and Kenya records a comparatively larger share of personal services in off-farm postings.
+  </p>
 </section>
 
 <!-- ═══════════════════════ LOGIT ═══════════════════════ -->
 <section>
   <h2>Skill Profiles of On-Farm vs Off-Farm Jobs: Logistic regression</h2>
   <p class="subtitle">P(on-farm) ~ skill categories + country FE &middot; N = 33,000</p>
-  <iframe data-src="results/charts/chart_logit.html" class="chart"></iframe>
-</section>
-
-<section>
-  <h2>Logistic Regression: Interpretation</h2>
-  <p class="subtitle">ESCO skill examples for each category</p>
-  <hr class="divider">
-  <div class="two-col" style="gap:1.2em; align-items:flex-start;">
-    <div class="col" style="flex:1;">
-      <div style="font-size:0.55em; font-weight:700; color:#2D8E57; margin-bottom:0.3em;">&#9650; Predicts On-Farm (OR &gt; 1)</div>
-      <table style="font-size:0.48em; width:100%; border-collapse:collapse; line-height:1.4;">
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:0.25em 0.3em; font-weight:700; white-space:nowrap;">S5 Working with computers</td>
-          <td style="padding:0.25em 0.3em; color:#2D8E57; font-weight:700;">OR = 2.86***</td>
-          <td style="padding:0.25em 0.3em; color:#666;">programming, digital tools for machinery, data analysis</td>
-        </tr>
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:0.25em 0.3em; font-weight:700; white-space:nowrap;">S7 Constructing</td>
-          <td style="padding:0.25em 0.3em; color:#2D8E57; font-weight:700;">OR = 1.75***</td>
-          <td style="padding:0.25em 0.3em; color:#666;">building farm structures, installing irrigation infrastructure</td>
-        </tr>
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:0.25em 0.3em; font-weight:700; white-space:nowrap;">S2 Information skills</td>
-          <td style="padding:0.25em 0.3em; color:#2D8E57; font-weight:700;">OR = 1.73***</td>
-          <td style="padding:0.25em 0.3em; color:#666;">conducting studies, monitoring crops/soil, analysing data</td>
-        </tr>
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:0.25em 0.3em; font-weight:700; white-space:nowrap;">S4 Management skills</td>
-          <td style="padding:0.25em 0.3em; color:#2D8E57; font-weight:700;">OR = 1.47***</td>
-          <td style="padding:0.25em 0.3em; color:#666;">planning, resource allocation, supervising farm operations</td>
-        </tr>
-      </table>
+  <p style="font-size:0.44em; color:#444; line-height:1.5; margin:0 0.5em 0.15em; font-style:italic;">
+    OR &gt; 1 = more likely in <b style="color:#2D8E57;">on-farm</b>; OR &lt; 1 = more likely in <b style="color:#42a5f5;">off-farm</b>.
+    On-farm roles stand out for their technical, data-driven profile; off-farm roles reflect service-oriented occupations.
+  </p>
+  <iframe data-src="results/charts/chart_logit.html" class="chart" style="height:350px;"></iframe>
+  <div style="display:flex; gap:1.5em; margin-top:0.1em; font-size:0.42em; align-items:flex-start;">
+    <div style="flex:1;">
+      <span style="font-weight:700; color:#2D8E57;">&#9650; On-Farm (OR&gt;1):</span>
+      <span style="color:#555;">S5 Computers <b style="color:#2D8E57">2.86***</b> · S7 Constructing <b style="color:#2D8E57">1.75***</b> · S2 Information <b style="color:#2D8E57">1.73***</b> · S4 Management <b style="color:#2D8E57">1.47***</b></span>
     </div>
-    <div class="col" style="flex:1;">
-      <div style="font-size:0.55em; font-weight:700; color:#E07A3A; margin-bottom:0.3em;">&#9660; Predicts Off-Farm (OR &lt; 1)</div>
-      <table style="font-size:0.48em; width:100%; border-collapse:collapse; line-height:1.4;">
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:0.25em 0.3em; font-weight:700; white-space:nowrap;">S3 Assisting and caring</td>
-          <td style="padding:0.25em 0.3em; color:#E07A3A; font-weight:700; white-space:nowrap;">OR = 0.30***</td>
-          <td style="padding:0.25em 0.3em; color:#666;">food preparation and serving, health care, client support</td>
-        </tr>
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:0.25em 0.3em; font-weight:700; white-space:nowrap;">S6 Handling and moving</td>
-          <td style="padding:0.25em 0.3em; color:#E07A3A; font-weight:700; white-space:nowrap;">OR = 0.64***</td>
-          <td style="padding:0.25em 0.3em; color:#666;">sorting/packaging goods, cleaning, waste disposal</td>
-        </tr>
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:0.25em 0.3em; font-weight:700; white-space:nowrap;">S8 Machinery &amp; equipment</td>
-          <td style="padding:0.25em 0.3em; color:#E07A3A; font-weight:700; white-space:nowrap;">OR = 0.88***</td>
-          <td style="padding:0.25em 0.3em; color:#666;">operating plant, driving vehicles, manufacturing machinery</td>
-        </tr>
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:0.25em 0.3em; font-weight:700; white-space:nowrap;">Transversal skills</td>
-          <td style="padding:0.25em 0.3em; color:#E07A3A; font-weight:700; white-space:nowrap;">OR = 0.84***</td>
-          <td style="padding:0.25em 0.3em; color:#666;">core competences, self-management, teamwork, communication</td>
-        </tr>
-      </table>
+    <div style="flex:1;">
+      <span style="font-weight:700; color:#42a5f5;">&#9660; Off-Farm (OR&lt;1):</span>
+      <span style="color:#555;">S3 Assisting &amp; caring <b style="color:#42a5f5">0.30***</b> · S6 Handling &amp; moving <b style="color:#42a5f5">0.64***</b> · Transversal <b style="color:#42a5f5">0.84***</b> · S8 Machinery <b style="color:#42a5f5">0.88***</b></span>
     </div>
   </div>
-  <div style="font-size:0.48em; color:#666; margin-top:0.35em; line-height:1.4;">
-    <span style="font-weight:600; color:#555;">S1 Communication</span> — not significant (p = 0.09); similarly prevalent in both sectors.
-  </div>
-  <div style="background:#f8f9fa; border-left:3px solid #3AADCF; border-radius:4px; padding:0.25em 0.55em; margin:0.3em 0 0; font-size:0.48em; color:#444; line-height:1.45;">
-    <strong style="color:#2c3e50;">Country effects:</strong>
-    Nigeria is strongly off-farm oriented (OR = 0.38***); Uganda is predominantly on-farm (OR = 2.67***).
-    Pseudo R&sup2; = 0.157, N = 33,000.
+  <div style="font-size:0.38em; color:#888; margin-top:0.1em; line-height:1.35;">
+    S1 Communication — n.s. (p = 0.09).
+    <span style="color:#555; font-weight:600;">Country FE:</span> Nigeria strongly off-farm (0.38***); Uganda on-farm (2.67***). Pseudo R² = 0.157.
   </div>
 </section>
 
